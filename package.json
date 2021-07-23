@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/johnnylambada/howto-eth#readme",
   "devDependencies": {
+    "@truffle/hdwallet-provider": "^1.4.1",
     "truffle": "^5.4.1"
   }
 }
