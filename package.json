@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/johnnylambada/howto-eth#readme",
   "devDependencies": {
+    "@openzeppelin/contracts": "^4.2.0",
+    "@openzeppelin/test-environment": "^0.1.9",
+    "@openzeppelin/test-helpers": "^0.5.12",
     "@truffle/hdwallet-provider": "^1.4.1",
     "chai": "^4.3.4",
     "ganache-cli": "^6.12.2",
