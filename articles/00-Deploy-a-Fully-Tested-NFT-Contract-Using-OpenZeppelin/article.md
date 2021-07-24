@@ -1,5 +1,32 @@
 # Deploy a Fully Tested NFT Contract Using OpenZeppelin
 
+- [Deploy a Fully Tested NFT Contract Using OpenZeppelin](#deploy-a-fully-tested-nft-contract-using-openzeppelin)
+  - [Introduction](#introduction)
+  - [What are we going to build?](#what-are-we-going-to-build)
+  - [A note about my environment](#a-note-about-my-environment)
+    - [shell.nix](#shellnix)
+    - [devbin (Development Binaries)](#devbin-development-binaries)
+    - [devlog](#devlog)
+    - [.envrc](#envrc)
+    - [.vscode](#vscode)
+  - [Let's get started](#lets-get-started)
+    - [Install npm and truffle](#install-npm-and-truffle)
+    - [Initialize truffle](#initialize-truffle)
+      - [`truffle-config.js`](#truffle-configjs)
+      - [`contracts/Migrations.sol` (can be ignored)](#contractsmigrationssol-can-be-ignored)
+      - [`migrations/1_initial_migration.js` (can be gignored)](#migrations1_initial_migrationjs-can-be-gignored)
+      - [`test/.gitkeep` (can be gignored)](#testgitkeep-can-be-gignored)
+    - [Use the latest version of the solidity compiler](#use-the-latest-version-of-the-solidity-compiler)
+    - [Install the rest of the environment](#install-the-rest-of-the-environment)
+      - [`@truffle/hdwallet-provider`](#trufflehdwallet-provider)
+      - [`mocha` and `chai`](#mocha-and-chai)
+      - [`ganache-cli`](#ganache-cli)
+      - [`@openzeppelin` `contracts`, `test-environment` and `test-helpers`](#openzeppelin-contracts-test-environment-and-test-helpers)
+- [MORE HERE](#more-here)
+- [TODO](#todo)
+    - [Congratulations #1](#congratulations-1)
+  - [](#)
+
 ## Introduction
 
 This article is the first in a series of articles that describe, in exacting detail, how I built a series of solidity contracts. I'm not going to go into a lot of theory, and I'm not going to try to sell you on how awesome ethereum, bitcoin, blockchain, etc are. There are plenty of other articles that do that. This series of articles will be a straight-forward description of what was built, how it works, and why I built it the way I did.
