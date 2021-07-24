@@ -22,12 +22,15 @@
       - [`mocha` and `chai`](#mocha-and-chai)
       - [`ganache-cli`](#ganache-cli)
       - [`@openzeppelin` `contracts`, `test-environment` and `test-helpers`](#openzeppelin-contracts-test-environment-and-test-helpers)
-  - [Add the ganache-cli development environment to `truffle-config.js`](#add-the-ganache-cli-development-environment-to-truffle-configjs)
-  - [Update test environment to use `mocha`:](#update-test-environment-to-use-mocha)
-- [MORE HERE](#more-here)
-- [TODO](#todo)
-    - [Congratulations #1](#congratulations-1)
-  - [](#)
+    - [Add the ganache-cli development environment to `truffle-config.js`](#add-the-ganache-cli-development-environment-to-truffle-configjs)
+    - [Update test environment to use `mocha`:](#update-test-environment-to-use-mocha)
+    - [Congratulations - You Have A Great Starting Point](#congratulations---you-have-a-great-starting-point)
+  - [Our ERC721 Contract](#our-erc721-contract)
+  - [Tests for the OpenZeppelinNft Contract](#tests-for-the-openzeppelinnft-contract)
+  - [Running the Tests On Our Local Machine](#running-the-tests-on-our-local-machine)
+  - [Deploying to the Rinkeby Testnet](#deploying-to-the-rinkeby-testnet)
+  - [Making an NFT On The Rinkeby Network](#making-an-nft-on-the-rinkeby-network)
+  - [Conclusion](#conclusion)
 
 ## Introduction
 
@@ -211,7 +214,7 @@ npm install --save-dev @openzeppelin/contracts @openzeppelin/test-environment @o
 * [test-environment](https://docs.openzeppelin.com/test-environment/0.1/)  Sets up a great test environment for testing your contracts.  Accounts, simple connections to Contracts, etc. It takes a lot of boilerplate out of your tests.
 * [test-helpers](https://docs.openzeppelin.com/test-helpers/0.5/) is an assertion library for smart contract testing.
 
-## Add the ganache-cli development environment to `truffle-config.js`
+### Add the ganache-cli development environment to `truffle-config.js`
 
 ```diff
 diff --git a/truffle-config.js b/truffle-config.js
@@ -239,7 +242,7 @@ index 8e8d0b4..d4666dc 100644
 
 The `ganache-cli` environment will allow us to run automated tests on our own machine very quickly. Much faster than it would take to run them against mainnet or any of the testnets. With ganache, we also do not need any real or test ethereum.
 
-## Update test environment to use `mocha`:
+### Update test environment to use `mocha`:
 ```diff
 diff --git a/package.json b/package.json
 index ac7b362..87dee76 100644
@@ -258,14 +261,57 @@ index ac7b362..87dee76 100644
 
 This change will allow us to run `truffle test` on the command line.
 
-# MORE HERE
-
-# TODO
-* migrations/2_deploy.js
-* [Add rinkeby network to truffle.conf](https://github.com/johnnylambada/nftcar/commit/44a478bea13a5d8976cbfa4368d3ec264f7ee5fd)  / [see this commit too](https://github.com/johnnylambada/nftcar/commit/27a98183a9a4a1450975f2bfb6fa8041c86e69d1)
-
-### Congratulations #1
+### Congratulations - You Have A Great Starting Point
 
 If you've made it this far, you have a perfect starting point for any new solidity project you want! The only thing missing is an actual contract and some tests. That's what the next section is all about!
 
-## 
+## Our ERC721 Contract
+
+OpenTruffle has done most of the work that needs to be done for our contract, and we're going to use that great work to our advantage. In the `node_modules` folder of your project you'll find several ethereum contracts.  The one we're looking for is:
+
+* `node_modules`
+  * `@openzeppelin`
+    * `contracts`
+      * `token`
+        * `ERC721`
+          * `presets`
+            * [ERC721PresetMinterPauserAutoId.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/presets/ERC721PresetMinterPauserAutoId.sol)
+
+It's well worth studying this contract and all of the contracts imported by it.
+
+Our simple contract imports the ERC721PresetMinterPauserAutoId contract and has enough boilerplate to make it work. 100% of our ERC721 contract is provided the OpenZeppelin preset.
+
+`contracts/OpenZeppelinNft.sol`
+```solidity
+// SPDX-License-Identifier: MIT ①
+
+pragma solidity ^0.8.0; ②
+
+import "@openzeppelin/contracts/token/ERC721/presets/ERC721PresetMinterPauserAutoId.sol"; ③
+
+contract OpenZeppelinNft is ERC721PresetMinterPauserAutoId { ④
+    constructor(string memory name, string memory symbol, string memory baseTokenURI) ⑤
+        ERC721PresetMinterPauserAutoId(name, symbol, baseTokenURI) ⑥
+    {
+    }
+}
+```
+
+1. The [Software Package Data Exchange](https://spdx.org/licenses/) (SPDX) license identifier for this file. The [MIT License](https://spdx.org/licenses/MIT.html).
+2. The `pragma solidity` tells the build system which version of the compiler to use. [Read the doc](https://docs.soliditylang.org/en/latest/layout-of-source-files.html#version-pragma) for detailed information.
+3. We're [importing](https://docs.soliditylang.org/en/latest/layout-of-source-files.html?highlight=import#importing-other-source-files) the ERC721PresetMinterPauserAutoId solidity file we just mentioned. This is the basis of our contract.
+4. Our contract is named `OpenZeppelinNft`. It's single parent ([inheritance](https://docs.soliditylang.org/en/latest/contracts.html?highlight=inheritance#inheritance)) contract is ERC721PresetMinterPauserAutoId.
+5. The `OpenZeppelinNft` contract has a `constructor` that takes the same arguments as its parent contract.
+6. The `OpenZeppelinNft` simply passes the arguments to its parent.
+
+## Tests for the OpenZeppelinNft Contract
+
+## Running the Tests On Our Local Machine
+* migrations/2_deploy.js
+
+## Deploying to the Rinkeby Testnet
+* TODO: [Add rinkeby network to truffle.conf](https://github.com/johnnylambada/nftcar/commit/44a478bea13a5d8976cbfa4368d3ec264f7ee5fd)  / [see this commit too](https://github.com/johnnylambada/nftcar/commit/27a98183a9a4a1450975f2bfb6fa8041c86e69d1)
+
+## Making an NFT On The Rinkeby Network
+
+## Conclusion
