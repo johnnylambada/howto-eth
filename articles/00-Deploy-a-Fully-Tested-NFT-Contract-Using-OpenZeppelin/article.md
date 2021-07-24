@@ -22,6 +22,8 @@
       - [`mocha` and `chai`](#mocha-and-chai)
       - [`ganache-cli`](#ganache-cli)
       - [`@openzeppelin` `contracts`, `test-environment` and `test-helpers`](#openzeppelin-contracts-test-environment-and-test-helpers)
+  - [Add the ganache-cli development environment to `truffle-config.js`](#add-the-ganache-cli-development-environment-to-truffle-configjs)
+  - [Update test environment to use `mocha`:](#update-test-environment-to-use-mocha)
 - [MORE HERE](#more-here)
 - [TODO](#todo)
     - [Congratulations #1](#congratulations-1)
@@ -171,6 +173,8 @@ index a707377..8e8d0b4 100644
        //  optimizer: {
 ```
 
+Note that you can use the `patch` command to make these changes. Copy the text above to your clipboard, then type `patch -p1` at the command line. Paste the lines into your terminal then hit [ctrl][d].  The changes should be made without using an editor. If you've already heavily modified the `truffle-config.js` file, this won't work.
+
 ### Install the rest of the environment
 
 There are several more NPM modules we need to install. We install them below.
@@ -207,13 +211,35 @@ npm install --save-dev @openzeppelin/contracts @openzeppelin/test-environment @o
 * [test-environment](https://docs.openzeppelin.com/test-environment/0.1/)  Sets up a great test environment for testing your contracts.  Accounts, simple connections to Contracts, etc. It takes a lot of boilerplate out of your tests.
 * [test-helpers](https://docs.openzeppelin.com/test-helpers/0.5/) is an assertion library for smart contract testing.
 
+## Add the ganache-cli development environment to `truffle-config.js`
 
-# MORE HERE
+```diff
+diff --git a/truffle-config.js b/truffle-config.js
+index 8e8d0b4..d4666dc 100644
+--- a/truffle-config.js
++++ b/truffle-config.js
+@@ -42,11 +42,11 @@ module.exports = {
+     // tab if you use this network and you must also set the `host`, `port` and `n
+     // options below to some value.
+     //
+-    // development: {
+-    //  host: "127.0.0.1",     // Localhost (default: none)
+-    //  port: 8545,            // Standard Ethereum port (default: none)
+-    //  network_id: "*",       // Any network (default: none)
+-    // },
++    development: {
++     host: "127.0.0.1",     // Localhost (default: none)
++     port: 8545,            // Standard Ethereum port (default: none)
++     network_id: "*",       // Any network (default: none)
++    },
+     // Another network with more advanced options...
+     // advanced: {
+     // port: 8777,             // Custom port
+```
 
-# TODO
-* migrations/2_deploy.js
-* Set up development network in truffle-config.js
-* Update test environment to use `mocha`:
+The `ganache-cli` environment will allow us to run automated tests on our own machine very quickly. Much faster than it would take to run them against mainnet or any of the testnets. With ganache, we also do not need any real or test ethereum.
+
+## Update test environment to use `mocha`:
 ```diff
 diff --git a/package.json b/package.json
 index ac7b362..87dee76 100644
@@ -229,6 +255,13 @@ index ac7b362..87dee76 100644
    "keywords": [],
    "author": "",
 ```
+
+This change will allow us to run `truffle test` on the command line.
+
+# MORE HERE
+
+# TODO
+* migrations/2_deploy.js
 * [Add rinkeby network to truffle.conf](https://github.com/johnnylambada/nftcar/commit/44a478bea13a5d8976cbfa4368d3ec264f7ee5fd)  / [see this commit too](https://github.com/johnnylambada/nftcar/commit/27a98183a9a4a1450975f2bfb6fa8041c86e69d1)
 
 ### Congratulations #1
