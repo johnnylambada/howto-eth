@@ -53,12 +53,12 @@ You'll find several files in the top level directory of the github repositiory t
 
 ### shell.nix
 
-I use [nix](https://nixos.org/) to manage the packages on my development computer. This nix expression makes node version 12 available to the project.
+I use [nix](https://nixos.org/) to manage the packages on my development computer. This nix expression makes node version 16 available to the project.
 
 ```nix
 { pkgs ? import <nixpkgs> {} }:
   pkgs.mkShell {
-    nativeBuildInputs = [ pkgs.nodejs-12_x ];
+    nativeBuildInputs = [ pkgs.nodejs-16_x ];
 }
 ```
 
@@ -90,7 +90,9 @@ I use [vscode](https://code.visualstudio.com/) as my IDE. The `.vscode` director
 
 ## Let's get started
 
-As I mentioned in the previous section, I use `nix` to curate my development environment for this project. You are free to use anything you like. `npm -g` or `nvm` are both fine choices. I'll assume you have `node` version 12 available to you on the command line along with `npm` and `npx`.
+As I mentioned in the previous section, I use `nix` to curate my development environment for this project. You are free to use anything you like. `npm -g` or `nvm` are both fine choices. I'll assume you have `node` version 16 available to you on the command line along with `npm` and `npx`.
+
+You can probably use any version of node beyond 8.9.4. The truffle [installation documentation](https://www.trufflesuite.com/docs/truffle/getting-started/installation) calls out this requirement specifically.
 
 ### Install npm and truffle
 
