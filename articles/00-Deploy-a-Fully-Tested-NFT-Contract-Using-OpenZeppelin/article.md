@@ -53,7 +53,7 @@ You'll find several files in the top level directory of the github repositiory t
 
 ### shell.nix
 
-I use nix to manage the packages on my development computer. This nix expression makes node version 12 available to the project.
+I use [nix](https://nixos.org/) to manage the packages on my development computer. This nix expression makes node version 12 available to the project.
 
 ```nix
 { pkgs ? import <nixpkgs> {} }:
@@ -72,7 +72,7 @@ Any log files that I may want review go here. For this project, this is mainly t
 
 ### .envrc
 
-I use `direnv` to set up the specific environment necessary to work on this project when I `cd` into it.
+I use [direnv](https://direnv.net/) to set up the specific environment necessary to work on this project when I `cd` into it.
 
 ```
 use_nix  ①
@@ -86,7 +86,7 @@ export NFTCAR_DIR=$PWD ③
 
 ### .vscode
 
-I use vscode as my IDE. The `.vscode` directory contains all of the configuration files for the IDE.
+I use [vscode](https://code.visualstudio.com/) as my IDE. The `.vscode` directory contains all of the configuration files for the IDE.
 
 ## Let's get started
 
@@ -300,7 +300,7 @@ contract OpenZeppelinNft is ERC721PresetMinterPauserAutoId { ④
 1. The [Software Package Data Exchange](https://spdx.org/licenses/) (SPDX) license identifier for this file. The [MIT License](https://spdx.org/licenses/MIT.html).
 2. The `pragma solidity` tells the build system which version of the compiler to use. [Read the doc](https://docs.soliditylang.org/en/latest/layout-of-source-files.html#version-pragma) for detailed information.
 3. We're [importing](https://docs.soliditylang.org/en/latest/layout-of-source-files.html?highlight=import#importing-other-source-files) the ERC721PresetMinterPauserAutoId solidity file we just mentioned. This is the basis of our contract.
-4. Our contract is named `OpenZeppelinNft`. It's single parent ([inheritance](https://docs.soliditylang.org/en/latest/contracts.html?highlight=inheritance#inheritance)) contract is ERC721PresetMinterPauserAutoId.
+4. Our contract is named `OpenZeppelinNft`. Its single parent ([inheritance](https://docs.soliditylang.org/en/latest/contracts.html?highlight=inheritance#inheritance)) contract is ERC721PresetMinterPauserAutoId.
 5. The `OpenZeppelinNft` contract has a `constructor` that takes the same arguments as its parent contract.
 6. The `OpenZeppelinNft` simply passes the arguments to its parent.
 
