@@ -3,9 +3,9 @@ const { ZERO_ADDRESS } = constants;
 
 const { expect } = require('chai');
 
-const ERC721PresetMinterPauserAutoId = artifacts.require('ERC721PresetMinterPauserAutoId');
+const OpenZeppelinNft = artifacts.require('OpenZeppelinNft');
 
-contract('ERC721PresetMinterPauserAutoId', function (accounts) {
+contract('OpenZeppelinNft', function (accounts) {
   const [ deployer, other ] = accounts;
 
   const name = 'MinterAutoIDToken';
@@ -16,7 +16,7 @@ contract('ERC721PresetMinterPauserAutoId', function (accounts) {
   const MINTER_ROLE = web3.utils.soliditySha3('MINTER_ROLE');
 
   beforeEach(async function () {
-    this.token = await ERC721PresetMinterPauserAutoId.new(name, symbol, baseURI, { from: deployer });
+    this.token = await OpenZeppelinNft.new(name, symbol, baseURI, { from: deployer });
   });
 
 

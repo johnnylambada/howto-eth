@@ -28,6 +28,8 @@
   - [Our ERC721 Contract](#our-erc721-contract)
   - [Tests for the OpenZeppelinNft Contract](#tests-for-the-openzeppelinnft-contract)
     - [Create test/OpenZeppelinNft.test.js](#create-testopenzeppelinnfttestjs)
+    - [First run of the tests](#first-run-of-the-tests)
+    - [Test Our Contract](#test-our-contract)
   - [Running the Tests On Our Local Machine](#running-the-tests-on-our-local-machine)
   - [Deploying to the Rinkeby Testnet](#deploying-to-the-rinkeby-testnet)
   - [Making an NFT On The Rinkeby Network](#making-an-nft-on-the-rinkeby-network)
@@ -328,16 +330,22 @@ The first first thing we're going to do is make a slightly modified version of t
 
 ```
 curl https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-contracts/release-v4.2/test/token/ERC721/presets/ERC721PresetMinterPauserAutoId.test.js \
-    | sed '/SupportInterfaces/d' \
-    > test/OpenZeppelinNft.test.js
+        | sed '/SupportInterfaces/d' \
+        | sed 's/ERC721PresetMinterPauserAutoId\([^:]\)/OpenZeppelinNft\1/g' \
+        > test/OpenZeppelinNft.test.js
 ```
 
-You'll notice that we strip out any lines containing `SupportedInterfaces`. Those lines are not usefull for our purposes.
+There are a couple of things to notice about this:
+1. We're taking a copy of the test file from a specific truffle release, so it should not vary over time.
+2. We're stripping out any lines containing `SupportedInterfaces`. Those lines are not usefull for our purposes and would make this process more complicated.
+3. We're changing some (but not all) instances of the string `ERC721PresetMinterPauserAutoId` to our contract name, `OpenZeppelinNft`. 
+
+### First run of the tests
 
 We can actually run our tests now, and if everything works well the solidity contracts will compile and the tests will run.
 
 ```
-% npx truffle test # ①
+ % npx truffle test # ①
 
 ② Compiling your contracts...
    ===========================
@@ -362,29 +370,29 @@ We can actually run our tests now, and if everything works well the solidity con
 > Compiling @openzeppelin/contracts/utils/introspection/ERC165.sol
 > Compiling @openzeppelin/contracts/utils/introspection/IERC165.sol
 > Compiling @openzeppelin/contracts/utils/structs/EnumerableSet.sol
-> Artifacts written to /tmp/test--65182-J7savjxc1kEi
+> Artifacts written to /tmp/test--65532-dHZ8ChnGRkd7
 > Compiled successfully using:
    - solc: 0.8.6+commit.11564f7e.Emscripten.clang
 
 
 
-③ Contract: ERC721PresetMinterPauserAutoId
+③ Contract: OpenZeppelinNft
     ✓ token has correct name
-    ✓ token has correct symbol (42ms)
-    ✓ deployer has the default admin role (65ms)
-    ✓ deployer has the minter role (61ms)
-    ✓ minter role admin is the default admin (39ms)
+    ✓ token has correct symbol (51ms)
+    ✓ deployer has the default admin role (71ms)
+    ✓ deployer has the minter role (56ms)
+    ✓ minter role admin is the default admin (40ms)
     minting
-      ✓ deployer can mint tokens (227ms)
-      ✓ other accounts cannot mint tokens (308ms)
+      ✓ deployer can mint tokens (176ms)
+      ✓ other accounts cannot mint tokens (334ms)
     pausing
-      ✓ deployer can pause (91ms)
-      ✓ deployer can unpause (154ms)
-      ✓ cannot mint while paused (149ms)
-      ✓ other accounts cannot pause (43ms)
-      ✓ other accounts cannot unpause (155ms)
+      ✓ deployer can pause (191ms)
+      ✓ deployer can unpause (170ms)
+      ✓ cannot mint while paused (207ms)
+      ✓ other accounts cannot pause (126ms)
+      ✓ other accounts cannot unpause (138ms)
     burning
-      ✓ holders can burn their tokens (225ms)
+      ✓ holders can burn their tokens (235ms)
 
 
   13 passing (4s)
@@ -392,7 +400,11 @@ We can actually run our tests now, and if everything works well the solidity con
 
 1. On my machine I use `npx` to run truffle. If you have truffle installed globally, you will run `truffle test`.
 2. The contracts compile first.
-3. Then the tests begin.
+3. Then the tests begin. 
+
+Note that our `test/OpenZeppelinNft.sol` contract is _not_ being tested here!  This is actually testing the underlying _Preset_ contract that we inherit from. Let's modify the `OpenZeppelinNft.test.js` script so that it tests the right thing
+
+### Test Our Contract
 
 ## Running the Tests On Our Local Machine
 * migrations/2_deploy.js
