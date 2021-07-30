@@ -308,6 +308,18 @@ contract OpenZeppelinNft is ERC721PresetMinterPauserAutoId { ④
 
 ## Tests for the OpenZeppelinNft Contract
 
+In the previous section we wrote a fully functional ERC721 contract by extending a `Preset`. OpenZeppelin has already written tests for this contract and all of its consituant pieces. Using the table below, you can review some of the components of the contract and their matching tests. After that, we'll build a test of our own based on one of the existant tests.
+
+|Contract|Test|
+|--------|----|
+|[ERC721PresetMinterPauserAutoId.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/contracts/token/ERC721/presets/ERC721PresetMinterPauserAutoId.sol)|[ERC721PresetMinterPauserAutoId.test.js](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/test/token/ERC721/presets/ERC721PresetMinterPauserAutoId.test.js)|
+|[ERC721.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/contracts/token/ERC721/ERC721.sol)|[ERC721.test.js](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/test/token/ERC721/ERC721.test.js)|
+|[ERC721Burnable.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/contracts/token/ERC721/extensions/ERC721Burnable.sol)|[ERC721Burnable.test.js](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/test/token/ERC721/extensions/ERC721Burnable.test.js)|
+|[ERC721Pausable.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/contracts/token/ERC721/extensions/ERC721Pausable.sol)|[ERC721Pausable.test.js](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/test/token/ERC721/extensions/ERC721Pausable.test.js)|
+|[AccessControlEnumerable.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/contracts/access/AccessControlEnumerable.sol)|[AccessControlEnumerable.test.js](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/test/access/AccessControlEnumerable.test.js)|
+|[Context.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/contracts/utils/Context.sol)|[Context.test.js](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/test/utils/Context.test.js)|
+|[Counters.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/contracts/utils/Counters.sol)|[Counters.test.js](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/test/utils/Counters.test.js)|
+
 ## Running the Tests On Our Local Machine
 * migrations/2_deploy.js
 
