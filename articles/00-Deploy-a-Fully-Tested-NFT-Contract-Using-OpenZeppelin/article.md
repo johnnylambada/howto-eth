@@ -27,6 +27,7 @@
     - [Congratulations - You Have A Great Starting Point](#congratulations---you-have-a-great-starting-point)
   - [Our ERC721 Contract](#our-erc721-contract)
   - [Tests for the OpenZeppelinNft Contract](#tests-for-the-openzeppelinnft-contract)
+    - [Create test/OpenZeppelinNft.test.js](#create-testopenzeppelinnfttestjs)
   - [Running the Tests On Our Local Machine](#running-the-tests-on-our-local-machine)
   - [Deploying to the Rinkeby Testnet](#deploying-to-the-rinkeby-testnet)
   - [Making an NFT On The Rinkeby Network](#making-an-nft-on-the-rinkeby-network)
@@ -298,6 +299,7 @@ contract OpenZeppelinNft is ERC721PresetMinterPauserAutoId { ④
     }
 }
 ```
+_note: don't forget to remove the circled numbers (①, etc) or your contract won't compile._
 
 1. The [Software Package Data Exchange](https://spdx.org/licenses/) (SPDX) license identifier for this file. The [MIT License](https://spdx.org/licenses/MIT.html).
 2. The `pragma solidity` tells the build system which version of the compiler to use. [Read the doc](https://docs.soliditylang.org/en/latest/layout-of-source-files.html#version-pragma) for detailed information.
@@ -308,7 +310,7 @@ contract OpenZeppelinNft is ERC721PresetMinterPauserAutoId { ④
 
 ## Tests for the OpenZeppelinNft Contract
 
-In the previous section we wrote a fully functional ERC721 contract by extending a `Preset`. OpenZeppelin has already written tests for this contract and all of its consituant pieces. Using the table below, you can review some of the components of the contract and their matching tests. After that, we'll build a test of our own based on one of the existant tests.
+In the previous section we wrote a fully functional ERC721 contract by extending a `Preset`. The OpenZeppelin team has already written tests for this contract and all of its consituant pieces. Using the table below, you can review some of the components of the contract and their matching tests. After that, we'll build a test of our own based on one of the existant tests.
 
 |Contract|Test|
 |--------|----|
@@ -319,6 +321,78 @@ In the previous section we wrote a fully functional ERC721 contract by extending
 |[AccessControlEnumerable.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/contracts/access/AccessControlEnumerable.sol)|[AccessControlEnumerable.test.js](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/test/access/AccessControlEnumerable.test.js)|
 |[Context.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/contracts/utils/Context.sol)|[Context.test.js](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/test/utils/Context.test.js)|
 |[Counters.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/contracts/utils/Counters.sol)|[Counters.test.js](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.2/test/utils/Counters.test.js)|
+
+### Create test/OpenZeppelinNft.test.js
+
+The first first thing we're going to do is make a slightly modified version of the source of the `ERC721PersetMinterPauserAutioId.test.js` file from github, and use it as the basis of our new `OpenZeppelinNft.test.js` file.
+
+```
+curl https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-contracts/release-v4.2/test/token/ERC721/presets/ERC721PresetMinterPauserAutoId.test.js \
+    | sed '/SupportInterfaces/d' \
+    > test/OpenZeppelinNft.test.js
+```
+
+You'll notice that we strip out any lines containing `SupportedInterfaces`. Those lines are not usefull for our purposes.
+
+We can actually run our tests now, and if everything works well the solidity contracts will compile and the tests will run.
+
+```
+% npx truffle test # ①
+
+② Compiling your contracts...
+   ===========================
+> Compiling ./contracts/Migrations.sol
+> Compiling ./contracts/OpenZeppelinNft.sol
+> Compiling @openzeppelin/contracts/access/AccessControl.sol
+> Compiling @openzeppelin/contracts/access/AccessControlEnumerable.sol
+> Compiling @openzeppelin/contracts/security/Pausable.sol
+> Compiling @openzeppelin/contracts/token/ERC721/ERC721.sol
+> Compiling @openzeppelin/contracts/token/ERC721/IERC721.sol
+> Compiling @openzeppelin/contracts/token/ERC721/IERC721Receiver.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol
+> Compiling @openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol
+> Compiling @openzeppelin/contracts/token/ERC721/presets/ERC721PresetMinterPauserAutoId.sol
+> Compiling @openzeppelin/contracts/utils/Address.sol
+> Compiling @openzeppelin/contracts/utils/Context.sol
+> Compiling @openzeppelin/contracts/utils/Counters.sol
+> Compiling @openzeppelin/contracts/utils/Strings.sol
+> Compiling @openzeppelin/contracts/utils/introspection/ERC165.sol
+> Compiling @openzeppelin/contracts/utils/introspection/IERC165.sol
+> Compiling @openzeppelin/contracts/utils/structs/EnumerableSet.sol
+> Artifacts written to /tmp/test--65182-J7savjxc1kEi
+> Compiled successfully using:
+   - solc: 0.8.6+commit.11564f7e.Emscripten.clang
+
+
+
+③ Contract: ERC721PresetMinterPauserAutoId
+    ✓ token has correct name
+    ✓ token has correct symbol (42ms)
+    ✓ deployer has the default admin role (65ms)
+    ✓ deployer has the minter role (61ms)
+    ✓ minter role admin is the default admin (39ms)
+    minting
+      ✓ deployer can mint tokens (227ms)
+      ✓ other accounts cannot mint tokens (308ms)
+    pausing
+      ✓ deployer can pause (91ms)
+      ✓ deployer can unpause (154ms)
+      ✓ cannot mint while paused (149ms)
+      ✓ other accounts cannot pause (43ms)
+      ✓ other accounts cannot unpause (155ms)
+    burning
+      ✓ holders can burn their tokens (225ms)
+
+
+  13 passing (4s)
+```
+
+1. On my machine I use `npx` to run truffle. If you have truffle installed globally, you will run `truffle test`.
+2. The contracts compile first.
+3. Then the tests begin.
 
 ## Running the Tests On Our Local Machine
 * migrations/2_deploy.js
