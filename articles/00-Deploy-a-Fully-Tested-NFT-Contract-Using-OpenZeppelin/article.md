@@ -28,12 +28,10 @@
   - [Our ERC721 Contract](#our-erc721-contract)
   - [Tests for the OpenZeppelinNft Contract](#tests-for-the-openzeppelinnft-contract)
     - [Create test/OpenZeppelinNft.test.js](#create-testopenzeppelinnfttestjs)
+    - [Start ganache-cli](#start-ganache-cli)
     - [First run of the tests](#first-run-of-the-tests)
-    - [Test Our Contract](#test-our-contract)
-  - [Running the Tests On Our Local Machine](#running-the-tests-on-our-local-machine)
-  - [Deploying to the Rinkeby Testnet](#deploying-to-the-rinkeby-testnet)
-  - [Making an NFT On The Rinkeby Network](#making-an-nft-on-the-rinkeby-network)
   - [Conclusion](#conclusion)
+    - [I like coffee](#i-like-coffee)
 
 ## Introduction
 
@@ -338,7 +336,20 @@ curl https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-contracts/relea
 There are a couple of things to notice about this:
 1. We're taking a copy of the test file from a specific truffle release, so it should not vary over time.
 2. We're stripping out any lines containing `SupportedInterfaces`. Those lines are not usefull for our purposes and would make this process more complicated.
-3. We're changing some (but not all) instances of the string `ERC721PresetMinterPauserAutoId` to our contract name, `OpenZeppelinNft`. 
+3. We're changing some (but not all) instances of the string `ERC721PresetMinterPauserAutoId` to our contract name, `OpenZeppelinNft`.
+
+If everything works correctly, the file [should look like this](https://github.com/johnnylambada/howto-eth/blob/bc6d6036aec882e0852b69be45dcd41e6823d7aa/test/OpenZeppelinNft.test.js).
+
+### Start ganache-cli
+
+We use ganache-cli as our local ethereum test network. We've already configured it in `truffle-config.js`, so now it's time to start it.
+
+I like to be able to review `ganache-cli` logs, so I write them to a file in the `devlogs` folder.
+
+```
+mkdir devlogs
+npx ganache-cli --deterministic 2>&1 > devlogs/ganache-cli.log &
+```
 
 ### First run of the tests
 
@@ -402,16 +413,10 @@ We can actually run our tests now, and if everything works well the solidity con
 2. The contracts compile first.
 3. Then the tests begin. 
 
-Note that our `test/OpenZeppelinNft.sol` contract is _not_ being tested here!  This is actually testing the underlying _Preset_ contract that we inherit from. Let's modify the `OpenZeppelinNft.test.js` script so that it tests the right thing
-
-### Test Our Contract
-
-## Running the Tests On Our Local Machine
-* migrations/2_deploy.js
-
-## Deploying to the Rinkeby Testnet
-* TODO: [Add rinkeby network to truffle.conf](https://github.com/johnnylambada/nftcar/commit/44a478bea13a5d8976cbfa4368d3ec264f7ee5fd)  / [see this commit too](https://github.com/johnnylambada/nftcar/commit/27a98183a9a4a1450975f2bfb6fa8041c86e69d1)
-
-## Making an NFT On The Rinkeby Network
-
 ## Conclusion
+
+I hope you found this article useful! It lays out a lot of groundwork for future articles that dive into the guts of solidity, testing with mocha and building a UI for our contract.  The `OpenZeppelinNft` contract we built in this article leverages the `OpenZeppelin` community's contracts for 100% of its functionality, but in the next article we'll write some code of our own!
+
+### I like coffee
+
+If you found this article useful I'd love to hear from you! Here's my eth address if you want to talk over coffee 0xe8d58A45a423B8724b0DB38ECcEfeAf68148E380.
